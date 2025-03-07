@@ -1,37 +1,139 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-    {% load static %}
+{% block title %}Lista de Carros{% endblock %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Carros</title>
-    <link rel="stylesheet" href="{% static 'cars/style.css' %}">
-</head>
-<body>
-    <header>
-        <div id="barra-navegação">
-            <div class="logo-loja">
-                <img src="{% static 'cars/images/logo.png' %}" alt="Logo">
+{% block content %}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Estilos gerais */
+    body {
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    /* Header */
+    header {
+        background-color: #222;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
+
+    header form {
+        display: flex;
+        gap: 10px;
+    }
+
+    header input {
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        width: 250px;
+    }
+
+    header button {
+        padding: 10px 15px;
+        background-color: #ff4c00;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    header button:hover {
+        background-color: #e04300;
+    }
+
+    /* Grid de carros */
+    .cars-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 40px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    /* Card do carro */
+    .car-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .car-card:hover {
+        transform: scale(1.05);
+    }
+
+    .car-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .car-card h2 {
+        font-size: 20px;
+        margin: 10px 0;
+        color: #222;
+    }
+
+    .car-card p {
+        font-size: 16px;
+        color: #666;
+        font-weight: bold;
+    }
+
+    /* Nenhum resultado */
+    .no-result {
+        text-align: center;
+        font-size: 18px;
+        color: #999;
+        margin-top: 20px;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #222;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: 40px;
+    }
+</style>
+
+<h1>Carros disponíveis</h1>
+
+<!-- Formulário de pesquisa -->
+<form method="GET" action="{% url 'cars_list' %}">
+    <input type="text" name="search" placeholder="Buscar Carro...">
+    <button type="submit">Buscar</button>
+</form>
+
+<div class="cars-grid">
+    {% if cars %}
+        {% for car in cars %}
+            <div class="car-card">
+                <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
+                <h2>{{ car.brand }} {{ car.model }}</h2>
+                <p>{{ car.factory_year }} - R$ {{ car.value }}</p>
             </div>
-        </div>
-    </header>
-    <main>
-        <title> Meus Carros</title>
-        {% block content %}
-        <div>
-            {% for car in cars %}
-                <h3>{{ car.brand }} - {{ car.model }} - {{car.factory_year}} </h3>
-            {% endfor%}
-        </div>
-        {% endblock %}
-    </main>
-    <footer>
+        {% endfor %}
+    {% else %}
+        <p class="no-result">Nenhum carro encontrado.</p>
+    {% endif %}
+</div>
 
-    </footer>
-    
-</body>
-</html>
-
-
+{% endblock %}
