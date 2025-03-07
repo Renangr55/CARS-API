@@ -1,10 +1,37 @@
-<html>
-        <head>
-            title <Meus carros>
-        <head>
-        <body>
-            <p>jajajajajajajaja<p>
-            <h1>lalalalala<h1>
-        <body>
-        
-<html>
+<!DOCTYPE html>
+
+    {% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Carros</title>
+    <link rel="stylesheet" href="{% static 'cars/style.css' %}">
+</head>
+<body>
+    <header>
+        <div id="barra-navegação">
+            <div class="logo-loja">
+                <img src="{% static 'cars/images/logo.png' %}" alt="Logo">
+            </div>
+        </div>
+    </header>
+    <main>
+        <title> Meus Carros</title>
+        {% block content %}
+        <div>
+            {% for car in cars %}
+                <h3>{{ car.brand }} - {{ car.model }} - {{car.factory_year}} </h3>
+            {% endfor%}
+        </div>
+        {% endblock %}
+    </main>
+    <footer>
+
+    </footer>
+    
+</body>
+</html>
+
+

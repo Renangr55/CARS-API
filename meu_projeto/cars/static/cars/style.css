@@ -1,0 +1,26 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: rgb(0, 174, 243);
+    height: 100px;
+    width: 100%;
+}
+
+#barra-navegação {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+#barra-navegação > .logo-loja {
+    padding-left: 10px;
+}
+
+#barra-navegação > .logo-loja > img {
+    width: 110px;
+}
